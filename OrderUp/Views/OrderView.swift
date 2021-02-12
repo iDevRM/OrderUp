@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct OrderView: View {
-    var categories = [Category(id: "Pizza", imageName: "Pizza5"),Category(id: "Chinese", imageName: "chinesefood"),Category(id: "Salads", imageName: "salads"),Category(id: "Desserts", imageName: "desserts")]
-    var menuItems = [MenuItem(id: "Pepperoni Pizza", description: "The way all pizza should be, New York style.", price: 14.99, addedToCart: false, image: "Pizza1"),MenuItem(id: "Garden Pizza", description: "Healthy with fresh ingredients.", price: 14.99, addedToCart: false, image: "Pizza2"),MenuItem(id: "Supreme Pizza", description: "The adult pizza. How many kids like supreme pizza?", price: 14.99, addedToCart: false, image: "Pizza4"),MenuItem(id: "Margharita Pizza", description: "So basic yet so good.", price: 14.99, addedToCart: false, image: "Pizza3")]
-        @State private var cartItems: [MenuItem] = []
+    var categories = StoredData.categories
+    var menuItems = StoredData.menuItems
+    
+    @State private var cartItems: [MenuItem] = []
     var body: some View {
         NavigationView {
             VStack {
@@ -40,10 +41,10 @@ struct OrderView: View {
                         .onTapGesture {
                             toggleCartItem(item)
                         }
+                    
                 }
             }
-            .navigationBarItems(trailing: Cart(cartItems: cartItems.count)
-)
+            .navigationBarItems(trailing: CartView(cartItems: cartItems.count))
         }
     }
     
@@ -76,80 +77,53 @@ struct ListRowView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.red)
                     Spacer()
-                    Button(action: {}, label: {
-                        Text("Add to Cart")
-                            .foregroundColor(.white)
-                            .font(.title3)
-                            .fontWeight(.regular)
-                            .padding(4.0)
-                            .onTapGesture {
-                                
-                            }
-                    })
-                    .background(Color.red)
-                    .cornerRadius(10)
-                    .shadow(color: .gray, radius: 7, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                  
+                    
+                    if !menuItem.addedToCart {
+                        ButtonView(menuItem: menuItem)
+                    } else {
+                        StepperView()
+                    }
+                    
                 }
             }
         }
     }
 }
 
-struct Cart: View {
-    var cartItems: Int
+struct ButtonView: View {
+    @State var menuItem: MenuItem
     var body: some View {
-        ZStack {
-            Image(systemName: "cart")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 40,height: 40)
-            ZStack {
-                Circle()
-                    .fill(Color.red)
-                    .frame(maxWidth: 22)
-                Text("\(cartItems)")
-                    .foregroundColor(.white)
-            }
-            .opacity(cartItems > 0 ? 1 : 0)
-            .offset(x: 15, y: -15)
-        }
+        Button(action: {}, label: {
+            Text("Add to Cart")
+                .foregroundColor(.white)
+                .font(.title3)
+                .fontWeight(.regular)
+                .padding(4.0)
+                .onTapGesture {
+                    print("This code has been performed",
+                          menuItem.addedToCart)
+                    menuItem.addedToCart = true
+                    print(menuItem.addedToCart)
+                }
+        })
+        .background(Color.red)
+        .cornerRadius(10)
+        .shadow(color: .gray, radius: 7, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
     }
-}
-
-struct CategoryRowView: View {
-    let imageName: String
-    let name: String
-    var body: some View {
-        VStack {
-            Image("\(imageName)")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: 150,maxHeight: 150)
-                .cornerRadius(15)
-                .shadow(radius: 10)
-            Text("\(name)")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(Color.red)
-                .offset( y: 0)
-                
-        }
-    }
-}
-
-struct Category: Identifiable {
-    var id: String
-    var imageName: String
     
 }
 
-struct MenuItem: Identifiable {
-    var id: String
-    var description: String
-    var price: Double
-    var addedToCart: Bool
-    var image: String
+struct StepperView: View {
+    @State private var amount = 1
+    var body: some View {
+        Stepper("\(amount)", onIncrement: {
+            amount += 1
+        }, onDecrement: {
+            if amount > 0 {
+                amount -= 1
+            } else {}
+        })
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
