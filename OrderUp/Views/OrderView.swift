@@ -9,9 +9,9 @@ import SwiftUI
 
 struct OrderView: View {
     var categories = StoredData.categories
-    var menuItems = StoredData.menuItems
+    var menutItems = StoredData.menuItems
+    @State var cartItems = [MenuItem]()
     
-    @State private var cartItems: [MenuItem] = []
     var body: some View {
         NavigationView {
             VStack {
@@ -36,27 +36,19 @@ struct OrderView: View {
                     .multilineTextAlignment(.leading)
                     .offset(x: -170)
                 
-                List(menuItems) { item in
-                    ListRowView(menuItem: item)
-                        .onTapGesture {
-                            toggleCartItem(item)
-                        }
-                    
+                List(menutItems) { item in
+                    ListRowView(menuItem: item )
+                        
                 }
             }
-            .navigationBarItems(trailing: CartView(cartItems: cartItems.count))
+            .navigationBarItems(trailing: CartView(cartItems: cartItems))
         }
-    }
-    
-    private func toggleCartItem(_ menuItem: MenuItem) {
-        cartItems.append(menuItem)
     }
 }
 
-
-
 struct ListRowView: View {
-    var menuItem: MenuItem
+    @State var menuItem: MenuItem
+    
     var body: some View {
         HStack {
             Image("\(menuItem.image)")
@@ -79,9 +71,10 @@ struct ListRowView: View {
                     Spacer()
                     
                     if !menuItem.addedToCart {
-                        ButtonView(menuItem: menuItem)
+                        ButtonView(menuItem: $menuItem)
                     } else {
-                        StepperView()
+                        StepperView(menuItem: $menuItem)
+                        
                     }
                     
                 }
@@ -91,7 +84,7 @@ struct ListRowView: View {
 }
 
 struct ButtonView: View {
-    @State var menuItem: MenuItem
+    @Binding var menuItem: MenuItem
     var body: some View {
         Button(action: {}, label: {
             Text("Add to Cart")
@@ -100,29 +93,22 @@ struct ButtonView: View {
                 .fontWeight(.regular)
                 .padding(4.0)
                 .onTapGesture {
-                    print("This code has been performed",
-                          menuItem.addedToCart)
-                    menuItem.addedToCart = true
-                    print(menuItem.addedToCart)
+                    
                 }
         })
         .background(Color.red)
         .cornerRadius(10)
         .shadow(color: .gray, radius: 7, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
     }
-    
 }
 
 struct StepperView: View {
     @State private var amount = 1
+    @Binding var menuItem: MenuItem
     var body: some View {
-        Stepper("\(amount)", onIncrement: {
-            amount += 1
-        }, onDecrement: {
-            if amount > 0 {
-                amount -= 1
-            } else {}
-        })
+        Stepper(value: $amount, in: 0...10 ){
+            Text("\(amount)")
+        }
     }
 }
 
