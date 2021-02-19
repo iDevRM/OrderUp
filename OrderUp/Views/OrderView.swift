@@ -10,7 +10,7 @@ import SwiftUI
 struct OrderView: View {
     var categories = StoredData.categories
     var menutItems = StoredData.menuItems
-    @State var cartItems = [MenuItem]()
+    @EnvironmentObject var cart: Cart
     
     var body: some View {
         NavigationView {
@@ -41,7 +41,7 @@ struct OrderView: View {
                         
                 }
             }
-            .navigationBarItems(trailing: CartView(cartItems: cartItems))
+            .navigationBarItems(trailing: CartView(cartItems: cart.cartItems))
         }
     }
 }
@@ -76,7 +76,6 @@ struct ListRowView: View {
                         StepperView(menuItem: $menuItem)
                         
                     }
-                    
                 }
             }
         }
@@ -85,16 +84,21 @@ struct ListRowView: View {
 
 struct ButtonView: View {
     @Binding var menuItem: MenuItem
+    @EnvironmentObject var cart: Cart
+    
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {
+            menuItem.addedToCart = true
+            cart.addToCart(menuItem)
+            print(cart.cartItems,cart.cartItems.count)
+            
+        }, label: {
             Text("Add to Cart")
                 .foregroundColor(.white)
                 .font(.title3)
                 .fontWeight(.regular)
                 .padding(4.0)
-                .onTapGesture {
-                    
-                }
+               
         })
         .background(Color.red)
         .cornerRadius(10)
@@ -105,16 +109,34 @@ struct ButtonView: View {
 struct StepperView: View {
     @State private var amount = 1
     @Binding var menuItem: MenuItem
+    @EnvironmentObject var cart: Cart
     var body: some View {
-        Stepper(value: $amount, in: 0...10 ){
-            Text("\(amount)")
-        }
+        Stepper(
+            onIncrement: {
+                print("increment")
+                amount += 1
+                cart.addToCart(menuItem)
+                print(cart.cartItems,cart.cartItems.count)
+                
+            },
+            onDecrement: {
+                print("decrement")
+                if amount > 0 {
+                    amount -= 1
+                    cart.removeFromCart(menuItem)
+                }
+                
+                print(cart.cartItems,cart.cartItems.count)
+            },
+            label: {
+                Text("\(amount)")
+            })
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         OrderView()
-        
+            .environmentObject(Cart())
     }
 }

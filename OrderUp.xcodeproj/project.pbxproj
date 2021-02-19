@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DC4150D25DF37090092359D /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4150C25DF37090092359D /* Cart.swift */; };
 		1DE8481225D5B62E00EB834A /* OrderUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8481125D5B62E00EB834A /* OrderUpApp.swift */; };
 		1DE8481425D5B62E00EB834A /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8481325D5B62E00EB834A /* OrderView.swift */; };
 		1DE8481625D5B62F00EB834A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DE8481525D5B62F00EB834A /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DC4150C25DF37090092359D /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		1DE8480E25D5B62E00EB834A /* OrderUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE8481125D5B62E00EB834A /* OrderUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderUpApp.swift; sourceTree = "<group>"; };
 		1DE8481325D5B62E00EB834A /* OrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				1DF2AEA725D7136E00284948 /* MenuItem.swift */,
 				1DF2AEAA25D7139900284948 /* Category.swift */,
 				1DF2AEB325D7148500284948 /* StoredData.swift */,
+				1DC4150C25DF37090092359D /* Cart.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				1DE8481425D5B62E00EB834A /* OrderView.swift in Sources */,
 				1DE8481225D5B62E00EB834A /* OrderUpApp.swift in Sources */,
 				1DF2AEAB25D7139900284948 /* Category.swift in Sources */,
+				1DC4150D25DF37090092359D /* Cart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
