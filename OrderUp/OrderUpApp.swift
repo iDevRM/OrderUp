@@ -13,6 +13,7 @@ struct OrderUpApp: App {
         WindowGroup {
             OrderView()
                 .environmentObject(Cart())
+                .environmentObject(StoredData())
         }
     }
 }

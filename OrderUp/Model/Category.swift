@@ -10,5 +10,5 @@ import Foundation
 struct Category: Identifiable {
     var id: String
     var imageName: String
-    
+    var isSelected: Bool?
 }

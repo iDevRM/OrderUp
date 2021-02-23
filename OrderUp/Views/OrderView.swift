@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct OrderView: View {
-    var categories = StoredData.categories
-    var menutItems = StoredData.menuItems
+    @State var categories = StoredData.categories
+    @State var menuItems = StoredData.pizzaItems
+    
     @EnvironmentObject var cart: Cart
+    @EnvironmentObject var storedData: StoredData
     
     var body: some View {
         NavigationView {
@@ -24,7 +26,7 @@ struct OrderView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 50) {
                         ForEach(categories) { item in
-                            CategoryRowView(imageName: item.imageName, name: item.id)
+                            CategoryRowView(category: item)
                         }
                     }
                     .frame(maxHeight: 200)
@@ -36,7 +38,7 @@ struct OrderView: View {
                     .multilineTextAlignment(.leading)
                     .offset(x: -170)
                 
-                List(menutItems) { item in
+                List(storedData.menuItems) { item in
                     ListRowView(menuItem: item )
                         
                 }
@@ -121,9 +123,13 @@ struct StepperView: View {
             },
             onDecrement: {
                 print("decrement")
-                if amount > 0 {
+                if amount > 1 {
                     amount -= 1
                     cart.removeFromCart(menuItem)
+                } else if amount == 1 {
+                    amount -= 1
+                    cart.removeFromCart(menuItem)
+                    menuItem.addedToCart = false
                 }
                 
                 print(cart.cartItems,cart.cartItems.count)
@@ -138,5 +144,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         OrderView()
             .environmentObject(Cart())
+            .environmentObject(StoredData())
     }
 }
