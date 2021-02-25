@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1D01D8E025E80BDE005430BE /* MenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D01D8DF25E80BDE005430BE /* MenuManager.swift */; };
+		1D01D8E425E82620005430BE /* ListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D01D8E325E82620005430BE /* ListRowView.swift */; };
+		1D01D8E725E82675005430BE /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D01D8E625E82675005430BE /* ButtonView.swift */; };
+		1D01D8EA25E82690005430BE /* StepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D01D8E925E82690005430BE /* StepperView.swift */; };
 		1DC4150D25DF37090092359D /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC4150C25DF37090092359D /* Cart.swift */; };
 		1DE8481225D5B62E00EB834A /* OrderUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8481125D5B62E00EB834A /* OrderUpApp.swift */; };
 		1DE8481425D5B62E00EB834A /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE8481325D5B62E00EB834A /* OrderView.swift */; };
@@ -22,6 +25,9 @@
 
 /* Begin PBXFileReference section */
 		1D01D8DF25E80BDE005430BE /* MenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuManager.swift; sourceTree = "<group>"; };
+		1D01D8E325E82620005430BE /* ListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowView.swift; sourceTree = "<group>"; };
+		1D01D8E625E82675005430BE /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		1D01D8E925E82690005430BE /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		1DC4150C25DF37090092359D /* Cart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cart.swift; sourceTree = "<group>"; };
 		1DE8480E25D5B62E00EB834A /* OrderUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE8481125D5B62E00EB834A /* OrderUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderUpApp.swift; sourceTree = "<group>"; };
@@ -47,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D01D8EC25E826CA005430BE /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+				1D01D8DF25E80BDE005430BE /* MenuManager.swift */,
+			);
+			path = Singleton;
+			sourceTree = "<group>";
+		};
 		1DE8480525D5B62E00EB834A = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +80,7 @@
 		1DE8481025D5B62E00EB834A /* OrderUp */ = {
 			isa = PBXGroup;
 			children = (
+				1D01D8EC25E826CA005430BE /* Singleton */,
 				1DE8482125D5B85B00EB834A /* Model */,
 				1DE8482225D5B86100EB834A /* Views */,
 				1DE8481125D5B62E00EB834A /* OrderUpApp.swift */,
@@ -91,7 +106,6 @@
 				1DF2AEAA25D7139900284948 /* Category.swift */,
 				1DF2AEB325D7148500284948 /* StoredData.swift */,
 				1DC4150C25DF37090092359D /* Cart.swift */,
-				1D01D8DF25E80BDE005430BE /* MenuManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -102,6 +116,9 @@
 				1DE8481325D5B62E00EB834A /* OrderView.swift */,
 				1DF2AEAD25D713D800284948 /* CategoryRowView.swift */,
 				1DF2AEB025D7140400284948 /* CartView.swift */,
+				1D01D8E325E82620005430BE /* ListRowView.swift */,
+				1D01D8E625E82675005430BE /* ButtonView.swift */,
+				1D01D8E925E82690005430BE /* StepperView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,8 +198,11 @@
 				1DF2AEAE25D713D800284948 /* CategoryRowView.swift in Sources */,
 				1DE8481425D5B62E00EB834A /* OrderView.swift in Sources */,
 				1DE8481225D5B62E00EB834A /* OrderUpApp.swift in Sources */,
+				1D01D8E725E82675005430BE /* ButtonView.swift in Sources */,
 				1D01D8E025E80BDE005430BE /* MenuManager.swift in Sources */,
+				1D01D8E425E82620005430BE /* ListRowView.swift in Sources */,
 				1DF2AEAB25D7139900284948 /* Category.swift in Sources */,
+				1D01D8EA25E82690005430BE /* StepperView.swift in Sources */,
 				1DC4150D25DF37090092359D /* Cart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
