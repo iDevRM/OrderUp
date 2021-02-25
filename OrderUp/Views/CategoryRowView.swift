@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct CategoryRowView: View {
-    @State var category: Category
-    @EnvironmentObject var storedData: StoredData
+    var category: Category
+    
+    @ObservedObject var selectedCategory = MenuManager.instance.storedData
     
     var body: some View {
         VStack {
-            Button(action: {}, label: {
+            Button(action: {selectedCategory.setItems(category: category.id)}, label: {
                 Image("\(category.imageName)")
                     .resizable()
                     .aspectRatio(contentMode: .fit)

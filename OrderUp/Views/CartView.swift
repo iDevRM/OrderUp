@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CartView: View {
-    var cartItems = [MenuItem]()
+    var amount = 0
     var body: some View {
         ZStack {
             Image(systemName: "cart")
@@ -19,10 +19,10 @@ struct CartView: View {
                 Circle()
                     .fill(Color.red)
                     .frame(maxWidth: 22)
-                Text("\(cartItems.count)")
+                Text("\(amount)")
                     .foregroundColor(.white)
             }
-            .opacity(cartItems.count > 0 ? 1 : 0)
+            .opacity(amount > 0 ? 1 : 0)
             .offset(x: 15, y: -15)
         }
     }

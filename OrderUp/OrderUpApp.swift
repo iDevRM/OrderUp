@@ -12,8 +12,6 @@ struct OrderUpApp: App {
     var body: some Scene {
         WindowGroup {
             OrderView()
-                .environmentObject(Cart())
-                .environmentObject(StoredData())
         }
     }
 }

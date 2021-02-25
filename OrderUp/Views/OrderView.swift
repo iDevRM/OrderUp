@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct OrderView: View {
-    @State var categories = StoredData.categories
-    @State var menuItems = StoredData.pizzaItems
-    
-    @EnvironmentObject var cart: Cart
-    @EnvironmentObject var storedData: StoredData
+    @State var categories = MenuManager.instance.storedData.categories
+    @ObservedObject var menuItems = MenuManager.instance.storedData
+    @ObservedObject var cart = MenuManager.instance.cart
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment:.leading) {
                 Text("Categories")
                     .font(.title3)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
-                    .offset(x: -150)
+                    .padding(.leading)
+                    
                 
                 ScrollView(.horizontal) {
                     HStack(spacing: 50) {
@@ -32,25 +31,28 @@ struct OrderView: View {
                     .frame(maxHeight: 200)
                     .offset(x: 35)
                 }
-                Text("Menu")
+                Text("Items")
                     .font(.title3)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.leading)
-                    .offset(x: -170)
+                    .padding(.leading)
+                    
                 
-                List(storedData.menuItems) { item in
+                List(menuItems.items) { item in
                     ListRowView(menuItem: item )
-                        
+                    
                 }
             }
-            .navigationBarItems(trailing: CartView(cartItems: cart.cartItems))
+            .navigationBarTitle("Food Menu")
+            .navigationBarItems(trailing: CartView(amount: cart.cartItems.count))
+            
         }
     }
 }
 
 struct ListRowView: View {
     @State var menuItem: MenuItem
-    
+    @ObservedObject var cart = MenuManager.instance.cart
     var body: some View {
         HStack {
             Image("\(menuItem.image)")
@@ -72,11 +74,10 @@ struct ListRowView: View {
                         .foregroundColor(.red)
                     Spacer()
                     
-                    if !menuItem.addedToCart {
+                    if !cart.cartItems.contains { $0.id == menuItem.id } {
                         ButtonView(menuItem: $menuItem)
                     } else {
                         StepperView(menuItem: $menuItem)
-                        
                     }
                 }
             }
@@ -86,13 +87,12 @@ struct ListRowView: View {
 
 struct ButtonView: View {
     @Binding var menuItem: MenuItem
-    @EnvironmentObject var cart: Cart
+    @ObservedObject var cart = MenuManager.instance.cart
     
     var body: some View {
         Button(action: {
             menuItem.addedToCart = true
             cart.addToCart(menuItem)
-            print(cart.cartItems,cart.cartItems.count)
             
         }, label: {
             Text("Add to Cart")
@@ -100,7 +100,7 @@ struct ButtonView: View {
                 .font(.title3)
                 .fontWeight(.regular)
                 .padding(4.0)
-               
+            
         })
         .background(Color.red)
         .cornerRadius(10)
@@ -109,20 +109,17 @@ struct ButtonView: View {
 }
 
 struct StepperView: View {
-    @State private var amount = 1
+    @State var amount = 1
     @Binding var menuItem: MenuItem
-    @EnvironmentObject var cart: Cart
+    @ObservedObject var cart = MenuManager.instance.cart
+    
     var body: some View {
         Stepper(
             onIncrement: {
-                print("increment")
                 amount += 1
                 cart.addToCart(menuItem)
-                print(cart.cartItems,cart.cartItems.count)
-                
             },
             onDecrement: {
-                print("decrement")
                 if amount > 1 {
                     amount -= 1
                     cart.removeFromCart(menuItem)
@@ -131,8 +128,6 @@ struct StepperView: View {
                     cart.removeFromCart(menuItem)
                     menuItem.addedToCart = false
                 }
-                
-                print(cart.cartItems,cart.cartItems.count)
             },
             label: {
                 Text("\(amount)")
@@ -143,7 +138,5 @@ struct StepperView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         OrderView()
-            .environmentObject(Cart())
-            .environmentObject(StoredData())
     }
 }
